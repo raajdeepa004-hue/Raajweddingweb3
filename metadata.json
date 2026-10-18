@@ -1,0 +1,8 @@
+{
+  "name": "An Eternal Love Letter — Wedding Invitation",
+  "description": "A cinematic luxury Indian wedding invitation in an enchanted maroon garden celebrating the union of Raaj Kumar and Harshavardhini Padmaja.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

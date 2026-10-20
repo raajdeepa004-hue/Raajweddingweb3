@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowRight, Sparkles } from 'lucide-react';
-import { WeddingConfig } from '../../config/wedding';
+import { ArrowRight, Clock3, MapPin, Sparkles } from 'lucide-react';
+import { VenueInfo, WeddingConfig } from '../../config/wedding';
 
 interface GoldenDateScratchProps {
   config: WeddingConfig;
@@ -222,8 +222,8 @@ export const GoldenDateScratch: React.FC<GoldenDateScratchProps> = ({ config, on
     measureScratchProgress();
   };
 
-  const renderCelebration = (title: string, date: string) => (
-    <div className="scratch-date-card flex min-w-0 flex-col items-center rounded-xl border border-[#c4a46a]/35 bg-[#fffaf0]/45 px-3 py-4 text-center">
+  const renderCelebration = (title: string, venue: VenueInfo) => (
+    <div className="scratch-date-card flex min-w-0 flex-col items-center rounded-xl border border-[#c4a46a]/35 bg-[#fffaf0]/55 px-3 py-3 text-center shadow-[0_8px_18px_rgba(67,18,31,0.06)]">
       <span className="font-cinzel text-sm font-bold uppercase tracking-[0.16em] text-[#7b263a]">
         {title}
       </span>
@@ -231,8 +231,37 @@ export const GoldenDateScratch: React.FC<GoldenDateScratchProps> = ({ config, on
         On
       </span>
       <p className="mt-0.5 w-full text-center font-cinzel text-xs font-bold leading-tight tracking-[0.05em] text-[#641c2c]">
-        {date.toUpperCase()}
+        {venue.dateFormatted.toUpperCase()}
       </p>
+
+      <div className="mt-3 w-full border-t border-[#c4a46a]/25 pt-2.5 text-left">
+        <div className="flex items-start gap-2">
+          <Clock3 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#b78332]" />
+          <div className="min-w-0">
+            <span className="block font-cinzel text-[8px] font-bold uppercase tracking-[0.18em] text-[#9b8f76]">
+              Time
+            </span>
+            <span className="block font-cormorant text-sm font-semibold leading-tight text-[#641c2c]">
+              {venue.timeFormatted}
+            </span>
+          </div>
+        </div>
+
+        <div className="mt-2 flex items-start gap-2">
+          <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#b78332]" />
+          <div className="min-w-0">
+            <span className="block font-cinzel text-[8px] font-bold uppercase tracking-[0.18em] text-[#9b8f76]">
+              Venue
+            </span>
+            <span className="block font-cormorant text-sm font-semibold leading-tight text-[#641c2c] break-words">
+              {venue.venueName}
+            </span>
+            <span className="block font-cormorant text-xs leading-tight text-[#6d5050] break-words">
+              {venue.venueAddress}
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 
@@ -265,14 +294,14 @@ export const GoldenDateScratch: React.FC<GoldenDateScratchProps> = ({ config, on
           </div>
 
           <div className="scratch-gate-ticket relative z-10 mx-auto mt-5 w-full max-w-[430px] rounded-[26px] border border-[#c4a46a]/65 bg-[#f8edda] p-2.5 shadow-[0_18px_40px_rgba(67,18,31,0.18)] sm:mt-6 sm:p-3">
-            <div className="relative min-h-[330px] overflow-hidden rounded-[20px] border border-[#9b6827]/55 bg-[#fbf0cf] sm:min-h-[350px]">
+            <div className="relative min-h-[430px] overflow-hidden rounded-[20px] border border-[#9b6827]/55 bg-[#fbf0cf] sm:min-h-[395px]">
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[radial-gradient(circle_at_50%_32%,#fffdf7_0%,#f8edda_48%,#e5c68b_100%)] px-4 py-5 text-center">
                 <span className="font-cinzel text-[10px] font-bold uppercase tracking-[0.3em] text-[#c4a46a]">
                   The celebrations begin
                 </span>
                 <div className="grid w-full max-w-[390px] grid-cols-1 gap-2.5 sm:grid-cols-2">
-                  {renderCelebration('Marriage', config.venues.marriage.dateFormatted)}
-                  {renderCelebration('Reception', config.venues.reception.dateFormatted)}
+                  {renderCelebration('Marriage', config.venues.marriage)}
+                  {renderCelebration('Reception', config.venues.reception)}
                 </div>
                 <span className="mt-4 text-lg text-[#c4a46a]">❦</span>
               </div>

@@ -85,9 +85,6 @@ export const CountdownFarewell: React.FC<CountdownFarewellProps> = ({ config }) 
           <h2 className="px-2 font-cinzel text-lg leading-tight sm:text-xl tracking-[0.2em] text-[#39302E] uppercase font-semibold break-words">
             Counting Down To {config.couple.groomName.split(' ')[0]} &amp; {config.couple.brideName.split(' ')[0]}
           </h2>
-          <p className="font-cormorant italic text-sm text-[#92967A] mt-1">
-            22 November 2026 • Asia/Kolkata Standard Time
-          </p>
         </div>
 
         {/* Countdown Timer Display */}

@@ -73,9 +73,29 @@ export async function getWeddingConfig(): Promise<WeddingConfig> {
       // Exclude _id before returning and merge with defaults so new fields like moments are always preserved
       const { ...cleanConfig } = doc as unknown as WeddingConfig & { _id?: unknown };
       delete (cleanConfig as { _id?: unknown })._id;
+      const savedVenues = cleanConfig.venues ?? {};
+      const savedMarriage = savedVenues.marriage ?? {};
+      const savedReception = savedVenues.reception ?? {};
+      const isLegacyMarriageTime = savedMarriage.timeFormatted === '7.30 AM - 9.00 AM'
+        || savedMarriage.timeFormatted === '7.30 AM to 9.00 AM';
       return {
         ...defaultWeddingConfig,
         ...cleanConfig,
+        venues: {
+          ...defaultWeddingConfig.venues,
+          ...savedVenues,
+          marriage: {
+            ...defaultWeddingConfig.venues.marriage,
+            ...savedMarriage,
+            ...(isLegacyMarriageTime
+              ? { timeFormatted: defaultWeddingConfig.venues.marriage.timeFormatted }
+              : {}),
+          },
+          reception: {
+            ...defaultWeddingConfig.venues.reception,
+            ...savedReception,
+          },
+        },
         moments: (cleanConfig.moments && cleanConfig.moments.length > 0)
           ? cleanConfig.moments
           : defaultWeddingConfig.moments,

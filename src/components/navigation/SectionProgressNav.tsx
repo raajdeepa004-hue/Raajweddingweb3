@@ -12,10 +12,9 @@ interface SectionItem {
 
 const sections: SectionItem[] = [
   { id: 'welcome', label: 'Welcome & Blessing', shortLabel: '01' },
-  { id: 'moments', label: 'Our Moments', shortLabel: '02' },
-  { id: 'timeline', label: 'Our Story & Reveal', shortLabel: '03' },
-  { id: 'venue', label: 'Wedding Celebrations', shortLabel: '04' },
-  { id: 'countdown', label: 'Big Day Countdown', shortLabel: '05' },
+  { id: 'timeline', label: 'Our Story & Reveal', shortLabel: '02' },
+  { id: 'venue', label: 'Wedding Celebrations', shortLabel: '03' },
+  { id: 'countdown', label: 'Big Day Countdown', shortLabel: '04' },
 ];
 
 export const SectionProgressNav: React.FC<SectionProgressNavProps> = ({ isInvitationOpened }) => {

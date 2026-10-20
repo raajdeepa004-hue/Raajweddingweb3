@@ -3,12 +3,17 @@ import { WeddingConfig, WeddingMilestone } from '../../config/wedding';
 
 const receptionHeartPath = 'M 50,96 C 42,88 8,64 4,36 C 1,17 13,5 28,5 C 39,5 47,12 50,22 C 53,12 61,5 72,5 C 87,5 99,17 96,36 C 92,64 58,88 50,96 Z';
 const receptionHeartClipPath = 'M 0.5,0.96 C 0.42,0.88 0.08,0.64 0.04,0.36 C 0.01,0.17 0.13,0.05 0.28,0.05 C 0.39,0.05 0.47,0.12 0.5,0.22 C 0.53,0.12 0.61,0.05 0.72,0.05 C 0.87,0.05 0.99,0.17 0.96,0.36 C 0.92,0.64 0.58,0.88 0.5,0.96 Z';
+const timelineFeatureFrameClassName = 'relative mx-auto w-full max-w-[380px] aspect-[0.92/1] flex-none';
 
 interface WeddingTimelineProps {
   config: WeddingConfig;
 }
 
 export const WeddingTimeline: React.FC<WeddingTimelineProps> = ({ config }) => {
+  const celebrationMilestones = config.milestones.filter(
+    (milestone) => milestone.id === 'marriage' || milestone.id === 'reception',
+  );
+
   return (
     <section
       id="timeline"
@@ -50,8 +55,9 @@ export const WeddingTimeline: React.FC<WeddingTimelineProps> = ({ config }) => {
 
           {/* Milestones Container */}
           <div className="space-y-12 sm:space-y-16">
-            {config.milestones.map((milestone: WeddingMilestone, index: number) => {
+            {celebrationMilestones.map((milestone: WeddingMilestone, index: number) => {
               const isEven = index % 2 === 0;
+              const isMarriage = milestone.id === 'marriage';
 
               return (
                 <div
@@ -73,9 +79,9 @@ export const WeddingTimeline: React.FC<WeddingTimelineProps> = ({ config }) => {
                       isEven ? 'sm:pl-10' : 'sm:pr-10'
                     }`}
                   >
-                    <div className="timeline-card bg-[#FFFDF9]/92 backdrop-blur-[2px] border border-[#C4A46A]/40 rounded-xl p-6 sm:p-7 parchment-shadow hover:border-[#C4A46A] transition-all duration-300 relative group">
+                    <div className={`timeline-card bg-[#FFFDF9]/92 backdrop-blur-[2px] border border-[#C4A46A]/40 rounded-xl p-6 sm:p-7 parchment-shadow hover:border-[#C4A46A] transition-all duration-300 relative group ${isMarriage ? 'text-center' : ''}`}>
                       {/* Milestone Number & Title */}
-                      <div className="flex items-center justify-between mb-2">
+                      <div className={`flex items-center mb-2 ${isMarriage ? 'justify-center gap-4' : 'justify-between'}`}>
                         <span className="font-cinzel text-[11px] tracking-[0.25em] text-[#C4A46A] uppercase font-semibold">
                           Chapter 0{index + 1}
                         </span>
@@ -88,17 +94,29 @@ export const WeddingTimeline: React.FC<WeddingTimelineProps> = ({ config }) => {
                         {milestone.title}
                       </h3>
 
-                      {/* Regular Date Display (for Chapters 1-3) */}
-                      {!milestone.isScratchCard ? (
+                      {/* Marriage illustration and date */}
+                      {isMarriage ? (
+                        <div className="my-4 flex flex-col items-center">
+                          <div className={`${timelineFeatureFrameClassName} overflow-hidden rounded-2xl border border-[#C4A46A]/45 bg-[#FFFDF9] shadow-[0_10px_24px_rgba(67,18,31,0.16)]`}>
+                            <div className="absolute inset-2 rounded-xl border border-[#ECC88B]/45 pointer-events-none z-20" />
+                            <img
+                              src="/images/marriageicon.jpg"
+                              alt="Bride and groom beneath a traditional wedding mandapam"
+                              className="h-full w-full object-cover object-center"
+                            />
+                          </div>
+                          <div className="timeline-date-pill inline-block px-3 py-1 rounded bg-[#F3E7D4] text-[#7B263A] font-cinzel text-sm tracking-wider font-semibold mt-4 border border-[#C4A46A]/30">
+                            {milestone.dateFormatted}
+                          </div>
+                        </div>
+                      ) : !milestone.isScratchCard ? (
                         <div className="timeline-date-pill inline-block px-3 py-1 rounded bg-[#F3E7D4] text-[#7B263A] font-cinzel text-sm tracking-wider font-semibold my-2 border border-[#C4A46A]/30">
                           {milestone.dateFormatted}
                         </div>
                       ) : (
                         /* RECEPTION HEART DISPLAY */
                         <div className="relative w-full flex justify-center items-center my-4">
-                          <div
-                            className="timeline-heart relative w-full max-w-[380px] aspect-[0.92/1] select-none filter drop-shadow-[0_10px_20px_rgba(67,18,31,0.22)]"
-                          >
+                          <div className={`${timelineFeatureFrameClassName} timeline-heart select-none filter drop-shadow-[0_10px_20px_rgba(67,18,31,0.22)]`}>
                             <div
                               className="absolute inset-0 bg-gradient-to-b from-[#FFFDF9] via-[#FAF3E6] to-[#F3E7D4]"
                               style={{

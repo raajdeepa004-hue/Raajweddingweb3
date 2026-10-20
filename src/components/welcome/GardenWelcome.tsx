@@ -95,7 +95,7 @@ export const GardenWelcome: React.FC<GardenWelcomeProps> = ({ config, onExploreC
           <button
             onClick={onExploreClick}
             className="group flex flex-col items-center text-[#641C2C] hover:text-[#7B263A] transition-colors focus:outline-none"
-            aria-label="Scroll to our moments"
+            aria-label="Scroll to our story"
           >
             <span className="font-cinzel text-xs tracking-[0.3em] uppercase mb-2 font-semibold">
               Scroll To Explore

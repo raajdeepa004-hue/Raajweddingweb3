@@ -3,7 +3,6 @@ import { defaultWeddingConfig, WeddingConfig } from './config/wedding';
 import { SealedEnvelope } from './components/envelope/SealedEnvelope';
 import { EnchantedGardenCanvas } from './components/garden/EnchantedGardenCanvas';
 import { GardenWelcome } from './components/welcome/GardenWelcome';
-import { OurMomentsGallery } from './components/moments/OurMomentsGallery';
 import { WeddingTimeline } from './components/timeline/WeddingTimeline';
 import { VenueDetails } from './components/venue/VenueDetails';
 import { CountdownFarewell } from './components/countdown/CountdownFarewell';
@@ -35,7 +34,9 @@ export default function App() {
   const [isCustomizerOpen, setIsCustomizerOpen] = useState<boolean>(false);
   const [adminToken, setAdminToken] = useState<string>('');
   const [saveStatus, setSaveStatus] = useState<string | null>(null);
-
+  
+  //A beautiful day to celebrate love
+  
   // Attempt to load existing config from server on mount
   useEffect(() => {
     fetch('/api/invitation')
@@ -46,6 +47,7 @@ export default function App() {
           const savedInvitation = json.data.invitation ?? {};
             const savedVenues = json.data.venues ?? {};
             const savedMarriage = savedVenues.marriage ?? {};
+            const savedReception = savedVenues.reception ?? {};
           const isLegacyDefaultAudio = savedAudio.audioSrc === '/audio/wedding-song.mp3'
             && savedAudio.title === 'Eternal Vows';
           const isLegacySubHeadline = savedInvitation.subHeadline
@@ -53,6 +55,8 @@ export default function App() {
           const isLegacyMarriageTitle = savedMarriage.title === 'EXCHANGING VOWS';
             const isLegacyMarriageVenue = savedMarriage.venueName === 'Level 9, Sky Garden By Diva'
               || savedMarriage.venueAddress === "1 Jalan Bayu Puteri 2/1, Johor Bahru, Johor Darul Ta'zim";
+            const isLegacyMarriageTime = savedMarriage.timeFormatted === '7.30 AM - 9.00 AM'
+              || savedMarriage.timeFormatted === '7.30 AM to 9.00 AM';
 
           setConfig({
             ...defaultWeddingConfig,
@@ -63,13 +67,19 @@ export default function App() {
                 marriage: {
                   ...defaultWeddingConfig.venues.marriage,
                   ...savedMarriage,
-                  timeFormatted: savedMarriage.timeFormatted?.trim()
+                  timeFormatted: isLegacyMarriageTime
+                    ? defaultWeddingConfig.venues.marriage.timeFormatted
+                    : savedMarriage.timeFormatted?.trim()
                     ? savedMarriage.timeFormatted
                     : defaultWeddingConfig.venues.marriage.timeFormatted,
                   ...(isLegacyMarriageVenue ? defaultWeddingConfig.venues.marriage : {}),
                   ...(isLegacyMarriageTitle
                     ? { title: defaultWeddingConfig.venues.marriage.title }
                     : {}),
+                },
+                reception: {
+                  ...defaultWeddingConfig.venues.reception,
+                  ...savedReception,
                 },
               },
             invitation: {
@@ -116,8 +126,8 @@ export default function App() {
     setShouldAutoStartMusic(true);
   };
 
-  const handleScrollToMoments = () => {
-    const el = document.getElementById('moments');
+  const handleScrollToTimeline = () => {
+    const el = document.getElementById('timeline');
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
     }
@@ -226,13 +236,10 @@ export default function App() {
           {/* Section 2: The Enchanted Garden / Welcome */}
           <GardenWelcome
             config={config}
-            onExploreClick={handleScrollToMoments}
+            onExploreClick={handleScrollToTimeline}
           />
 
-          {/* Section 3: Our Moments (Revolving Door Polaroid Gallery) */}
-          <OurMomentsGallery config={config} />
-
-          {/* Section 4: Our Story and Wedding Timeline (with Heart Scratch Card) */}
+          {/* Section 3: Our Story and Wedding Timeline (with Heart Scratch Card) */}
           <WeddingTimeline config={config} />
 
           {/* Section 4: Venue and Location (Google Maps & QR code frames) */}

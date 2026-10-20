@@ -166,7 +166,7 @@ export const VenueDetails: React.FC<VenueDetailsProps> = ({ config }) => {
             <span className="text-[#C4A46A] text-sm">✦</span>
           </div>
           <h2 className="font-cinzel text-3xl sm:text-4xl font-semibold tracking-wider text-[#641C2C] mb-3">
-            WEDDING CELEBRATIONS
+            OUR WEDDING EVENTS
           </h2>
           <p className="font-cormorant italic text-base sm:text-lg text-[#39302E] max-w-lg mx-auto">
             We look forward to celebrating the sacred wedding ceremony and reception with you.

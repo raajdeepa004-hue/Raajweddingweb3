@@ -35,16 +35,16 @@ export const WeddingTimeline: React.FC<WeddingTimelineProps> = ({ config }) => {
             <span className="text-[#C4A46A] text-sm">✦</span>
             <span className="h-[1px] w-10 bg-[#C4A46A]/60" />
             <span className="font-cinzel text-xs tracking-[0.3em] text-[#7B263A] uppercase font-semibold">
-              Our Journey
+              Our Story
             </span>
             <span className="h-[1px] w-10 bg-[#C4A46A]/60" />
             <span className="text-[#C4A46A] text-sm">✦</span>
           </div>
           <h2 className="font-cinzel text-3xl sm:text-4xl font-semibold tracking-wider text-[#641C2C] mb-3">
-            A Journey Written in Love
+            Two Hearts, One Forever 
           </h2>
           <p className="font-cormorant italic text-base sm:text-lg text-[#39302E] max-w-md mx-auto">
-            From our very first words to our sacred forever, each chapter holds our deepest blessing.
+            Every moment led us here, every blessing brings us closer, and forever begins with us. 
           </p>
         </div>
 

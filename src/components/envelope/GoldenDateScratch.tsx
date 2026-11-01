@@ -127,6 +127,13 @@ export const GoldenDateScratch: React.FC<GoldenDateScratchProps> = ({ config, on
     };
   }, []);
 
+  useEffect(() => {
+    if (!isRevealed) return undefined;
+
+    const timer = window.setTimeout(onContinue, 7000);
+    return () => window.clearTimeout(timer);
+  }, [isRevealed, onContinue]);
+
   const getPoint = (event: React.PointerEvent<HTMLCanvasElement>): ScratchPoint => {
     const bounds = event.currentTarget.getBoundingClientRect();
     return {
